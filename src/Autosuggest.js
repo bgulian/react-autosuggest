@@ -51,6 +51,7 @@ class Autosuggest extends Component {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.onDocumentMouseDown);
+    document.addEventListener('mouseup', this.onDocumentMouseUp);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,6 +82,7 @@ class Autosuggest extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.onDocumentMouseDown);
+    document.removeEventListener('mouseup', this.onDocumentMouseUp);
   }
 
   getSuggestion(sectionIndex, suggestionIndex) {
@@ -140,6 +142,11 @@ class Autosuggest extends Component {
 
       node = node.parentNode;
     } while (node !== null && node !== document);
+  };
+
+  onDocumentMouseUp = event => {
+    // Dont let safari get a hold of this event
+    event.preventDefault();
   };
 
   findSuggestionElement(startNode) {
